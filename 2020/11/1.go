@@ -15,8 +15,8 @@ const floor rune = '.'
 
 
 func countNeighbours(x int, y int, seatMap [][]rune) int {
-	maxX := len(seatMap[0]) - 1
-	maxY := len(seatMap) - 1
+	maxX := len(seatMap) - 1
+	maxY := len(seatMap[0]) - 1
 	result := 0
 	for i := -1; i <= 1; i++ {
 		for j := -1; j <= 1; j++ {
@@ -38,7 +38,7 @@ func countNeighbours(x int, y int, seatMap [][]rune) int {
 func copySlice(source [][]rune) [][]rune {
 	target := make([][]rune, 0)
 	for i := 0; i < len(source); i++ {
-		line := make([]rune, len(source))
+		line := make([]rune, len(source[0]))
 		target = append(target, line)
 	}
 	for i := 0; i < len(source); i++ {
@@ -52,8 +52,8 @@ func copySlice(source [][]rune) [][]rune {
 
 
 func equalSlices(s1, s2 [][]rune) bool {
-	for i := 0; i < len(s1[0]); i++ {
-		for j := 0; j < len(s1); j++ {
+	for i := 0; i < len(s1); i++ {
+		for j := 0; j < len(s1[0]); j++ {
 			if s1[i][j] != s2[i][j] {
 				return false
 			}
@@ -81,8 +81,8 @@ func main() {
 		log.Println(err)
 	}
 
-	x := len(seatMap[0])
-	y := len(seatMap)
+	x := len(seatMap)
+	y := len(seatMap[0])
 	neighbourCount := make([][]int, x)
 	for i := 0; i < x; i++ {
 		neighbourCount[i] = make([]int, y)
