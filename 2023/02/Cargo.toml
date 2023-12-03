@@ -7,3 +7,6 @@ edition = "2021"
 
 [[bin]]
 name = "1"
+
+[[bin]]
+name = "2"
