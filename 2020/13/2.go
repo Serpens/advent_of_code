@@ -16,6 +16,46 @@ type Bus struct {
 }
 
 
+func mulInv(a, b int) int {
+	b0 := b
+	x0 := 0
+	x1 := 1
+	var temp int
+	if b <= 1 {
+		return 1
+	}
+	for a > 1 {
+		q := a / b
+
+		temp = b
+		b = a%b
+		a = temp
+
+		temp = x0
+		x0 = x1 - q * x0
+		x1 = temp
+	}
+	if x1 < 0 {
+		x1 += b0
+	}
+	return x1
+}
+
+
+func chinese(buses []Bus) int {
+	sum := 0
+	prod := 1
+	for _, bus := range buses {
+		prod *= bus.line
+	}
+	for _, bus :=  range buses {
+		p := prod
+		sum += bus.delay * mulInv(p, bus.line) * p
+	}
+	return sum % prod
+}
+
+
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	var line string
@@ -42,20 +82,6 @@ func main() {
 		buses = append(buses, currentBus)
 	}
 
-	var allOnTime bool
-	for i := 0; true; i += buses[0].line {
-		allOnTime = true
-		for j := 1; j < len(buses); j++ {
-			if buses[j].line - i % buses[j].line != buses[j].delay {
-				allOnTime = false
-				break
-			}
-		}
-		if allOnTime {
-			fmt.Println(i)
-			return
-		}
-	}
-
+	fmt.Println(chinese(buses))
 }
 
